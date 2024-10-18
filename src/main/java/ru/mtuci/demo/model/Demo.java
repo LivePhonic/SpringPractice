@@ -1,22 +1,42 @@
 package ru.mtuci.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Entity
+@Table(name = "demo")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Demo {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(name = "name")
     private String name;
-    private int num;
 
-    public int getNum() {
-        return num;
-    }
+    @Column(name = "number")
+    private int number;
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(mappedBy = "demo")
+    @JsonIgnoreProperties("demo")
+    private List<Details> details;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "demo_info",
+            joinColumns = @JoinColumn(name = "demo_id"),
+            inverseJoinColumns = @JoinColumn(name = "info_id")
 
-    public void setNum(int num) {
-        this.num = num;
-    }
+    )
+    private List<Info> infos;
 }

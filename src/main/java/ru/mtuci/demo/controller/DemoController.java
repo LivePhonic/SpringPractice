@@ -1,18 +1,31 @@
 package ru.mtuci.demo.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.mtuci.demo.model.Demo;
+import ru.mtuci.demo.service.DemoService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/demo")
 public class DemoController {
 
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam String str) {
-        return str;
+    private final DemoService demoService;
+
+    public DemoController(DemoService demoService) {
+        this.demoService = demoService;
     }
-    @PostMapping
-    public Demo showDemo(@RequestBody Demo demo) {
-        return demo;
+
+    @GetMapping
+    @PreAuthorize("hasAnyAuthority('read')")
+    public List<Demo> findAll() {
+        return demoService.findAll();
+    }
+
+    @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('modification')")
+    public void save(@RequestBody Demo demo) {
+        demoService.save(demo);
     }
 }
