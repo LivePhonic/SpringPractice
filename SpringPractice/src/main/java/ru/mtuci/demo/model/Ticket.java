@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Ticket {
-    private String deviceId; // Идентификатор устройства
-    private long lifetime; // Время жизни тикета в миллисекундах
-    private LocalDateTime activationDate; // Дата активации
-    private LocalDateTime expirationDate; // Дата истечения
-    private boolean licenseBlocked; // Статус блокировки лицензии
-    private String digitalSignature; // Цифровая подпись
+    private String deviceId;
+    private long lifetime;
+    private LocalDateTime activationDate;
+    private LocalDateTime expirationDate;
+    private boolean licenseBlocked;
+    private String digitalSignature;
 }
