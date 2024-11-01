@@ -1,23 +1,29 @@
 package ru.mtuci.demo.configuration;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 import java.util.Date;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
+
+    private final UserDetailsService userDetailsService;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -31,49 +37,63 @@ public class JwtTokenProvider {
 
     //TODO: реализовать методы создания, валидации и получения информации из JWT токена
     public String createToken(String username, Set<GrantedAuthority> authorities) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("auth", authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList())
+        );
+
+        Date now = new Date();
+        Date expiationDate = new Date(now.getTime() + expiration);
+
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + expiration))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(expiationDate)
+                .signWith(getSigningKey())
                 .compact();
     }
+
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parse(token);
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+
             return true;
-        } catch (MalformedJwtException e) {
-            return false;
-        } catch (ExpiredJwtException e) {
-            return false;
-        } catch (UnsupportedJwtException e) {
-            return false;
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return false;
         }
+
     }
 
     public String getUsername(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
-                .parseClaimsJws(token).getBody().getSubject();
+        System.out.println(getAuthorities(token));
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+
     }
 
     public Set<GrantedAuthority> getAuthorities(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secret)
+        return ((Collection<?>) Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
                 .parseClaimsJws(token)
-                .getBody();
+                .getBody()
+                .get("auth", Collection.class)).stream()
+                .map(authority -> new SimpleGrantedAuthority((String) authority))
+                .collect(Collectors.toSet());
+    }
 
-        String authorities = claims.get("authorities", String.class);
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-        if (authorities != null) {
-            String[] roles = authorities.split(",");
-            for (String role : roles) {
-                grantedAuthorities.add(new SimpleGrantedAuthority(role.trim()));
-            }
-        }
-
-        return Set.copyOf(grantedAuthorities);
+    public Authentication getAuthentication(String token) {
+        String username = getUsername(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 }
+

@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>ru.mtuci</groupId>
-	<artifactId>SpringPractice</artifactId>
+	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>

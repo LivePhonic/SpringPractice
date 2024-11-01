@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +19,10 @@ public class ApplicationLicense {
     @GeneratedValue
     private UUID id;
 
-    private String date;
     private String key;
+    private LocalDateTime activationDate;
+    private LocalDateTime expirationDate;
+    private String deviceId;
+    private boolean isBlocked;
+
 }
