@@ -29,10 +29,10 @@ public class TicketController {
 
             ApplicationLicense license = optionalLicense.get();
             Ticket ticket = new Ticket(
-                    license.getDeviceId(),
+                    license.getDevice_count(),
                     3600000,
-                    license.getActivationDate(),
-                    license.getExpirationDate(),
+                    license.getFirst_activation_date(),
+                    license.getEnding_date(),
                     license.isBlocked(),
                     "digital_signature"
             );
