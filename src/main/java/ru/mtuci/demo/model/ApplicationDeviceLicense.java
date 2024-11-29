@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "device_license")
@@ -19,15 +18,15 @@ public class ApplicationDeviceLicense {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "license_id")
+    @JoinColumn(name = "licenseId")
     private ApplicationLicense license;
 
     @ManyToOne
-    @JoinColumn(name = "device_id")
+    @JoinColumn(name = "deviceId")
     private ApplicationDevice device;
 
-    private Date activation_date;
+    private Date activationDate;
 }

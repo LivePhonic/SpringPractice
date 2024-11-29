@@ -7,123 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "getDemo",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin@test.com",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test2\",\r\n    \"number\": 456\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/demo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"demo"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "SetDemo",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test2\",\r\n    \"number\": 2,\r\n    \"details\": []\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/demo/save",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"demo",
-						"save"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "OneToMany",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test4\",\r\n    \"number\": 1234,\r\n    \"infos\": [\r\n        {\r\n            \"title\": \"test1\",\r\n            \"description\": \"test1\"\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/demo/save",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"demo",
-						"save"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "login",
 			"request": {
 				"method": "POST",
@@ -182,10 +65,143 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "createLicense",
 			"request": {
-				"method": "GET",
-				"header": []
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyODIyODA3LCJleHAiOjE3MzI4MjY0MDd9.tSsUJwvmcL7RIZsaDgyLTKuggU34MZessmvBLz6PF4M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"productId\": \"2\",\r\n  \"ownerId\": \"1\",\r\n  \"licenseTypeId\": \"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/license/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"license",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activateLicense",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyNzQzNTI2LCJleHAiOjE3MzI3NDcxMjZ9.D54QEco8S2TJm6_5JJUQEsHoLjBVmWke-Go814YV6MU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activationCode\": \"3b382cc1-da0a-4a1b-af1f-20cd6c64c6fa\",\r\n    \"name\": \"PC\",\r\n    \"mac_address\": \"AC:6F:D1:C7:DC:FA\",\r\n    \"id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/license/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"license",
+						"activate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "infoLicense",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/license/info",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"license",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "renewalLicence",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyODMwOTM1LCJleHAiOjE3MzI4MzQ1MzV9.HqGaKuMjzE7xM16c_1fIgJc-9w5C4ZlmW4E-AAOK-bk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activationCode\": \"a11d0122-84cc-4432-886d-d7427a9aa262\",\r\n    \"hs\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/license/renewal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"license",
+						"renewal"
+					]
+				}
 			},
 			"response": []
 		}

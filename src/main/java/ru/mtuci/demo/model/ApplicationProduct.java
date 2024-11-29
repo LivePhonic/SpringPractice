@@ -18,10 +18,10 @@ public class ApplicationProduct {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     private String name;
 
-    private boolean is_blocked;
+    private boolean isBlocked;
 }
 

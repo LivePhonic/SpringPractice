@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.UUID;
 
 import java.util.Date;
 
@@ -20,31 +19,31 @@ public class ApplicationLicense {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     private String code;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private ApplicationUser user;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "productId")
     private ApplicationProduct product;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
-    private ApplicationLicenseType license_type;
+    @JoinColumn(name = "typeId")
+    private ApplicationLicenseType licenseType;
 
-    private Date first_activation_date;
+    private Date firstActivationDate;
 
-    private Date ending_date;
+    private Date endingDate;
 
     private boolean blocked;
 
-    private int device_count;
+    private int deviceCount;
 
-    private UUID owner_id;
+    private Long ownerId;
 
     private int duration;
 

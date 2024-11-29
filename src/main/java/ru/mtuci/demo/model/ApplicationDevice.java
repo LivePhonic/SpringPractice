@@ -18,13 +18,13 @@ public class ApplicationDevice {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     private String name;
 
-    private String mac_address;
+    private String macAddress;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private ApplicationUser user;
 }

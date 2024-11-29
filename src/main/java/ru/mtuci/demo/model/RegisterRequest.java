@@ -1,9 +1,12 @@
 package ru.mtuci.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 @Data
+@Getter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
     private String email;

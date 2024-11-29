@@ -2,7 +2,7 @@ spring:
   application:
     name: demo
   datasource:
-    url: jdbc:postgresql://localhost:5432/Test
+    url: jdbc:postgresql://localhost:5432/demo
     username: postgres
     password: 1234
   jpa:
@@ -11,5 +11,5 @@ spring:
     show-sql: true
 
 jwt:
-  secret: SuperCuteSecret
+  secret: SuuuuuuuuperCuteSecret~You'llNeverKnowHim.
   expiration: 3600000

@@ -1,9 +1,11 @@
 package ru.mtuci.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Getter
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationRequest {
     private String email;

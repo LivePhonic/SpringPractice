@@ -19,19 +19,19 @@ public class ApplicationLicenseHistory {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "license_id")
+    @JoinColumn(name = "licenseId")
     private ApplicationLicense license;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private ApplicationUser user;
 
     private String status;
 
-    private Date change_date;
+    private Date changeDate;
 
     private String description;
 }

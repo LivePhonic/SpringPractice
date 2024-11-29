@@ -19,11 +19,11 @@ public class ApplicationLicenseType {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     private String name;
 
-    private int default_duration;
+    private int defaultDuration;
 
     private String description;
 }

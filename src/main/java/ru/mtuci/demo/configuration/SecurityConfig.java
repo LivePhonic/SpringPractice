@@ -27,7 +27,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
-        return new JwtTokenFilter(jwtTokenProvider, userDetailsService);
+        return new JwtTokenFilter(jwtTokenProvider);
     }
 
     @Bean

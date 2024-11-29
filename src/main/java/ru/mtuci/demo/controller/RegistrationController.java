@@ -11,6 +11,7 @@ import ru.mtuci.demo.model.ApplicationRole;
 import ru.mtuci.demo.model.ApplicationUser;
 import ru.mtuci.demo.model.RegisterRequest;
 import ru.mtuci.demo.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,9 +30,11 @@ public class RegistrationController {
                         .body("This email is already in use.");
             }
 
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
             ApplicationUser newUser = new ApplicationUser();
             newUser.setEmail(email);
-            newUser.setPassword(request.getPassword());
+            newUser.setPassword(passwordEncoder.encode(request.getPassword()));
             newUser.setRole(ApplicationRole.USER);
             newUser.setUsername(request.getUsername());
 
