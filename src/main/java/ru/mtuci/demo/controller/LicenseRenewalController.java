@@ -26,11 +26,10 @@ public class LicenseRenewalController {
     @PostMapping("/renewal")
     public ResponseEntity<?> renewalLicense(@RequestBody LicenseRenewalRequest request, HttpServletRequest req) {
         try {
-            String code = request.getActivationCode();
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
 
-            ApplicationTicket ticket = licenseService.renewalLicense(code, user);
+            ApplicationTicket ticket = licenseService.renewalLicense(request.getActivationCode(), user);
 
             if (!ticket.getInfo().equals("The license has been successfully renewed")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)

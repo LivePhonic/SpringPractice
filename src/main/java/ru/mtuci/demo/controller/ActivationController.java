@@ -30,11 +30,9 @@ public class ActivationController {
     @PostMapping("/activate")
     public ResponseEntity<?> createLicense(@RequestBody ActivationRequest request, HttpServletRequest req) {
         try {
-            String mac = request.getMac_address();
-            String name = request.getName();
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
-            ApplicationDevice device = deviceService.registerOrUpdateDevice(mac, name, user);
+            ApplicationDevice device = deviceService.registerOrUpdateDevice(request.getMac_address(), request.getName(), user);
 
             ApplicationTicket applicationTicket = licenseService.activateLicense(request.getActivationCode(), device, user);
 

@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-
 @Entity
 @Table(name = "license")
 @Getter

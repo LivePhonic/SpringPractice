@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 public class ApplicationTicket {
     private Date currentDate;
-    private String lifetime;
+    private Date lifetime;
     private Date activationDate;
     private Date expirationDate;
     private Long userId;
