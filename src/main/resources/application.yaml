@@ -3,13 +3,13 @@ spring:
     name: demo
   datasource:
     url: jdbc:postgresql://localhost:5432/demo
-    username: postgres
-    password: 1234
+    username: ${DB_LOGIN}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
 jwt:
-  secret: SuuuuuuuuperCuteSecret~You'llNeverKnowHim.
+  secret: ${JWT_SECRET}
   expiration: 3600000
