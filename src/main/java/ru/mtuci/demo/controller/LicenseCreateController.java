@@ -9,6 +9,8 @@ import ru.mtuci.demo.model.*;
 import ru.mtuci.demo.repository.LicenseRepository;
 import ru.mtuci.demo.service.impl.*;
 
+//TODO: 1. Неверно используются Http статусы. Они относятся к состоянию запроса, а не к вашей логике. Лучше отправить 200ОК
+
 @RestController
 @RequestMapping("/api/license")
 @RequiredArgsConstructor

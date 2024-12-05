@@ -12,6 +12,16 @@ import java.util.*;
 import java.security.*;
 import java.util.stream.Collectors;
 
+//TODO: 1. Количество доступных устройств при создании всегда 0. DeviceCount - Это максимально возможное число устройств
+//TODO: 2. Возможна ли коллизия при генерации кода активации?
+//TODO: 3. Использование @SneakyThrows может привести к неявным ошибкам
+//TODO: 4. ticket.setLifetime("One hour"); - это будет тяжело парсить на стороне клиента
+//TODO: 5. Проверьте установку дат при первой активации
+//TODO: 6. Нужно ли при повторной активации устанавливать пользователя?
+//TODO: 7. При активации лицензии дублируется логика создания тикета
+//TODO: 8. Продлить лицензию может кто угодно
+//TODO: 9. При продлении лицензии не нужно менять пользователя
+
 @Service
 public class LicenseServiceImpl {
     private final LicenseRepository licenseRepository;

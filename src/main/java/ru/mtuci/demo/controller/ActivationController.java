@@ -17,6 +17,8 @@ import ru.mtuci.demo.service.impl.DeviceServiceImpl;
 import ru.mtuci.demo.service.impl.LicenseServiceImpl;
 import ru.mtuci.demo.service.impl.UserDetailsServiceImpl;
 
+//TODO: 1. Проверять целые предложения текста странно. Лучше ввести статусы или информационные коды
+
 @RestController
 @RequestMapping("/api/license")
 @RequiredArgsConstructor

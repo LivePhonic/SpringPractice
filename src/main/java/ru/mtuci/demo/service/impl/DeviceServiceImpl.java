@@ -7,6 +7,8 @@ import ru.mtuci.demo.repository.DeviceRepository;
 
 import java.util.Optional;
 
+//TODO: 1. Странная логика в registerOrUpdateDevice. Вы не обновите информацию, а всегда будете создавать новое устройство
+
 @Service
 public class DeviceServiceImpl {
     private final DeviceRepository deviceRepository;
