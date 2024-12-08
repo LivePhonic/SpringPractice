@@ -26,12 +26,12 @@ public class ProductUpdateController {
         try {
 
             String res = productService.upadteProduct(request.getProductId(), request.getName(), request.getIsBlocked());
-            if (Objects.equals(res, "Product Not Found")) {
+            if (!Objects.equals(res, "200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(res);
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(res);
+            return ResponseEntity.status(HttpStatus.OK).body("Product updated successfully.");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

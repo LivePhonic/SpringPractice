@@ -25,7 +25,7 @@ public class LicenseTypeCreateController {
 
             Long id = licenseTypeService.createLicenseType(request.getDuration(), request.getDescription(), request.getName());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("New type added successfully.\nID: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("New type added successfully.\nID: " + id);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

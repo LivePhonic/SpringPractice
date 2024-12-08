@@ -21,7 +21,7 @@ public class ApplicationLicenseType {
 
     private String name;
 
-    private int defaultDuration;
+    private Long defaultDuration;
 
     private String description;
 }

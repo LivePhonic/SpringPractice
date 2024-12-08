@@ -27,12 +27,12 @@ public class LicenseTypeUpdateController {
 
             String res = licenseTypeService.upadteLicenseType(request.getId(), request.getDuration(),
                     request.getDescription(), request.getName());
-            if (Objects.equals(res, "License Type Not Found")) {
+            if (!Objects.equals(res, "200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(res);
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("New type added successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("New type added successfully.");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

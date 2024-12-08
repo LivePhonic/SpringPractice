@@ -34,7 +34,7 @@ public class LicenseInfoController {
         try {
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
-            Optional<ApplicationDevice> device = deviceService.findDeviceByInfo(user, request.getMac_address(),
+            Optional<ApplicationDevice> device = deviceService.getDeviceByInfo(user, request.getMac_address(),
                     request.getName());
             if (device.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -43,12 +43,14 @@ public class LicenseInfoController {
 
             ApplicationTicket ticket = licenseService.getActiveLicensesForDevice(device.get(), request.getActivationCode());
 
-            if (!ticket.getInfo().equals("Info about license")) {
+            if (!ticket.getInfo().equals("200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ticket.getInfo());
             }
 
-            return ResponseEntity.status(HttpStatus.FOUND).body(ticket);
+            ticket.setInfo("Info about license");
+
+            return ResponseEntity.status(HttpStatus.OK).body(ticket);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

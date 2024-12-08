@@ -28,20 +28,21 @@ public class ActivationController {
     private final LicenseServiceImpl licenseService;
 
     @PostMapping("/activate")
-    public ResponseEntity<?> activateLicense(@RequestBody ActivationRequest request, HttpServletRequest req) {
+    public ResponseEntity<?> createLicense(@RequestBody ActivationRequest request, HttpServletRequest req) {
         try {
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
-            ApplicationDevice device = deviceService.registerOrUpdateDevice(request.getMac_address(), request.getName(), user);
+            ApplicationDevice device = deviceService.registerOrUpdateDevice(request.getMac_address(), request.getName(), user, request.getDeviceId());
 
-            ApplicationTicket applicationTicket = licenseService.activateLicense(request.getActivationCode(), device, user);
+            ApplicationTicket ticket = licenseService.activateLicense(request.getActivationCode(), device, user);
 
-            if (!applicationTicket.getInfo().equals("The license has been successfully activated")) {
+            if (!ticket.getInfo().equals("200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(applicationTicket.getInfo());
+                        .body(ticket.getInfo());
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(applicationTicket);
+            ticket.setInfo("The license has been successfully activated");
+            return ResponseEntity.status(HttpStatus.OK).body(ticket);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

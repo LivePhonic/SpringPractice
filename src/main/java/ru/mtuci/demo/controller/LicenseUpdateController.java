@@ -24,14 +24,15 @@ public class LicenseUpdateController {
     @PreAuthorize("hasAnyAuthority('modification')")
     public ResponseEntity<?> createLicense(@RequestBody LicenseUpdateRequest request) {
         try {
+
             String res = licenseService.updateLicense(request.getId(), request.getOwnerId(), request.getProductId(),
                     request.getTypeId(), request.getIsBlocked(), request.getDescription());
-            if (!Objects.equals(res, "License Updated Successfully")) {
+            if (!Objects.equals(res, "200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(res);
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("License updated successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("License updated successfully.");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

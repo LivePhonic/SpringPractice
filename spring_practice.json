@@ -72,7 +72,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyODk1MjUwLCJleHAiOjE3MzI4OTg4NTB9.qRsHt30ikpCSAmwdrV0qsL9Jz77xcl8gqr5nGmml8qM",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzNjg1MjAyLCJleHAiOjE3MzM2ODg4MDJ9.cKSWHXuJMIceEG4OjohAfMtxCklyKFAALL_DUw_r-u4",
 							"type": "string"
 						}
 					]
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"productId\": \"2\",\r\n  \"ownerId\": \"1\",\r\n  \"licenseTypeId\": \"1\"\r\n}",
+					"raw": "{\r\n  \"productId\": \"202\",\r\n  \"ownerId\": \"102\",\r\n  \"licenseTypeId\": \"52\",\r\n  \"count\": \"1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +112,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzMDU0MzU3LCJleHAiOjE3MzMwNTc5NTd9.iiWhTSUuaqwsaXFwuAXBghTKhL7h4lqQZLRnF5pIngY",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzNjg1MjAyLCJleHAiOjE3MzM2ODg4MDJ9.cKSWHXuJMIceEG4OjohAfMtxCklyKFAALL_DUw_r-u4",
 							"type": "string"
 						}
 					]
@@ -121,7 +121,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"6512223d-d6e8-43d3-8385-40c86a948c85\",\r\n    \"name\": \"HsdPhone\",\r\n    \"mac_address\": \"AA:AA:AA:AA:AA:AA\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"60b513de-d928-4c42-bdb3-9140e4609239\",\r\n    \"name\": \"HDD\",\r\n    \"mac_address\": \"BB:BB:BB:AA:AA:AA\",\r\n    \"deviceId\": \"111\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -192,7 +192,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyODk1MjUwLCJleHAiOjE3MzI4OTg4NTB9.qRsHt30ikpCSAmwdrV0qsL9Jz77xcl8gqr5nGmml8qM",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczMzY4NjcwMywiZXhwIjoxNzMzNjkwMzAzfQ.rbeMqNtEnGAPC510pA58p_avikwSUIupfzzkjNJOQHI",
 							"type": "string"
 						}
 					]
@@ -201,7 +201,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"e2059f11-39a6-4bc1-9a8e-ce5eb68df981\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"60b513de-d928-4c42-bdb3-9140e4609239\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,7 +232,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzMDU0MzU3LCJleHAiOjE3MzMwNTc5NTd9.iiWhTSUuaqwsaXFwuAXBghTKhL7h4lqQZLRnF5pIngY",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzNjg1MjAyLCJleHAiOjE3MzM2ODg4MDJ9.cKSWHXuJMIceEG4OjohAfMtxCklyKFAALL_DUw_r-u4",
 							"type": "string"
 						}
 					]
@@ -241,7 +241,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"This\",\r\n    \"isBlocked\": \"true\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Basic\",\r\n    \"isBlocked\": \"false\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -312,7 +312,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyOTgzOTYxLCJleHAiOjE3MzI5ODc1NjF9.CXNJOAdyEc6rf4f0kNDOQBlKkvbjdn5GDGHkiDagF0Q",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzNjg1MjAyLCJleHAiOjE3MzM2ODg4MDJ9.cKSWHXuJMIceEG4OjohAfMtxCklyKFAALL_DUw_r-u4",
 							"type": "string"
 						}
 					]
@@ -321,7 +321,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"duration\": 130,\r\n    \"description\": \"Something\",\r\n    \"name\": \"Something\"\r\n}",
+					"raw": "{\r\n    \"duration\": 130,\r\n    \"description\": \"130\",\r\n    \"name\": \"Basic\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

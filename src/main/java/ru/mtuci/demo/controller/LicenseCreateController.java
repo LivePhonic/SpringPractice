@@ -53,9 +53,9 @@ public class LicenseCreateController {
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
 
-            Long id = licenseService.createLicense(productId, ownerId, licenseTypeId, user);
+            Long id = licenseService.createLicense(productId, ownerId, licenseTypeId, user, request.getCount());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("License created successfully.\nID: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("License created successfully.\nID: " + id);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

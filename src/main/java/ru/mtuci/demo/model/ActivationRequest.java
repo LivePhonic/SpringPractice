@@ -11,4 +11,5 @@ public class ActivationRequest {
     private String activationCode;
     private String name;
     private String mac_address;
+    private Long deviceId;
 }

@@ -31,12 +31,14 @@ public class LicenseRenewalController {
 
             ApplicationTicket ticket = licenseService.renewalLicense(request.getActivationCode(), user);
 
-            if (!ticket.getInfo().equals("The license has been successfully renewed")) {
+            if (!ticket.getInfo().equals("200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ticket.getInfo());
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
+            ticket.setInfo("The license has been successfully renewed");
+
+            return ResponseEntity.status(HttpStatus.OK).body(ticket);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

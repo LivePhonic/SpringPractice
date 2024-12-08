@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LicenseTypeCreationRequest {
-    private int duration;
+    private Long duration;
     private String description;
     private String name;
 }

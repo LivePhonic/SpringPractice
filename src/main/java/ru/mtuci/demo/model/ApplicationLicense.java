@@ -40,11 +40,13 @@ public class ApplicationLicense {
 
     private boolean blocked;
 
-    private int deviceCount;
+    private Long deviceCount;
 
-    private Long ownerId;
+    @ManyToOne
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    private ApplicationUser ownerId;
 
-    private int duration;
+    private Long duration;
 
     private String description;
 }

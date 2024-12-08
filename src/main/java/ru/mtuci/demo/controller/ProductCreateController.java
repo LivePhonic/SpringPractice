@@ -25,7 +25,7 @@ public class ProductCreateController {
 
             Long id = productService.createProduct(request.getName(), request.getIsBlocked());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully.\nID: " + id);
+            return ResponseEntity.status(HttpStatus.OK).body("Product created successfully.\nID: " + id);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");
