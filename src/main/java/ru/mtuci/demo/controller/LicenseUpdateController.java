@@ -26,7 +26,7 @@ public class LicenseUpdateController {
         try {
 
             String res = licenseService.updateLicense(request.getId(), request.getOwnerId(), request.getProductId(),
-                    request.getTypeId(), request.getIsBlocked(), request.getDescription());
+                    request.getTypeId(), request.getIsBlocked(), request.getDescription(), request.getDeviceCount());
             if (!Objects.equals(res, "200")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(res);
