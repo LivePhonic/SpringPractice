@@ -21,6 +21,10 @@ public class DeviceLicenseServiceImpl {
         return deviceLicenseRepository.findById(id);
     }
 
+    public Long getDeviceCountForLicense(Long licenseId) {
+        return deviceLicenseRepository.countByLicenseId(licenseId);
+    }
+
     public List<ApplicationDeviceLicense> getAllLicenseById(ApplicationDevice device) {
         return deviceLicenseRepository.findByDeviceId(device.getId());
     }

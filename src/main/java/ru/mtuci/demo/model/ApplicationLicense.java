@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
+//TODO: 1. Связь с owner должна быть такая же, как с user
+//TODO: 2. int может быть маловат для длительности
 
 @Entity
 @Table(name = "license")
@@ -41,11 +43,13 @@ public class ApplicationLicense {
 
     private boolean blocked;
 
-    private int deviceCount;
+    private Long deviceCount;
 
-    private Long ownerId;
+    @ManyToOne
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    private ApplicationUser ownerId;
 
-    private int duration;
+    private Long duration;
 
     private String description;
 }

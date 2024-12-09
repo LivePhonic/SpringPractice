@@ -26,18 +26,17 @@ public class LicenseRenewalController {
     @PostMapping("/renewal")
     public ResponseEntity<?> renewalLicense(@RequestBody LicenseRenewalRequest request, HttpServletRequest req) {
         try {
-            String code = request.getActivationCode();
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
 
-            ApplicationTicket ticket = licenseService.renewalLicense(code, user);
+            ApplicationTicket ticket = licenseService.renewalLicense(request.getActivationCode(), user);
 
-            if (!ticket.getInfo().equals("The license has been successfully renewed")) {
+            if (!ticket.getStatus().equals("OK")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(ticket.getInfo());
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
+            return ResponseEntity.status(HttpStatus.OK).body(ticket);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

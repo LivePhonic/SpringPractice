@@ -1,7 +1,5 @@
 package ru.mtuci.demo.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import ru.mtuci.demo.model.*;
 import ru.mtuci.demo.repository.LicenseRepository;
@@ -12,6 +10,16 @@ import java.util.*;
 import java.security.*;
 import java.util.stream.Collectors;
 
+//TODO: 1. Количество доступных устройств при создании всегда 0. DeviceCount - Это максимально возможное число устройств
+//TODO: 2. Возможна ли коллизия при генерации кода активации?
+//TODO: 3. Использование @SneakyThrows может привести к неявным ошибкам
+//TODO: 4. ticket.setLifetime("One hour"); - это будет тяжело парсить на стороне клиента
+//TODO: 5. Проверьте установку дат при первой активации
+//TODO: 6. Нужно ли при повторной активации устанавливать пользователя?
+//TODO: 7. При активации лицензии дублируется логика создания тикета
+//TODO: 8. Продлить лицензию может кто угодно
+//TODO: 9. При продлении лицензии не нужно менять пользователя
+
 @Service
 public class LicenseServiceImpl {
     private final LicenseRepository licenseRepository;
@@ -19,159 +27,219 @@ public class LicenseServiceImpl {
     private final ProductServiceImpl productService;
     private final DeviceLicenseServiceImpl deviceLicenseService;
     private final LicenseHistoryServiceImpl licenseHistoryService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final DeviceServiceImpl deviceServiceImpl;
 
-    public LicenseServiceImpl(LicenseRepository licenseRepository, LicenseTypeServiceImpl licenseTypeService, LicenseTypeServiceImpl licenseTypeService1, ProductServiceImpl productService, DeviceLicenseServiceImpl deviceLicenseService, LicenseHistoryServiceImpl licenseHistoryService) {
+    public LicenseServiceImpl(LicenseRepository licenseRepository, LicenseTypeServiceImpl licenseTypeService,
+                              ProductServiceImpl productService, DeviceLicenseServiceImpl deviceLicenseService,
+                              LicenseHistoryServiceImpl licenseHistoryService, UserDetailsServiceImpl userDetailsServiceImpl, DeviceServiceImpl deviceServiceImpl) {
         this.licenseRepository = licenseRepository;
-        this.licenseTypeService = licenseTypeService1;
+        this.licenseTypeService = licenseTypeService;
         this.productService = productService;
         this.deviceLicenseService = deviceLicenseService;
         this.licenseHistoryService = licenseHistoryService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.deviceServiceImpl = deviceServiceImpl;
     }
 
     public Optional<ApplicationLicense> getLicenseById(Long id) {
         return licenseRepository.findById(id);
     }
 
-    public ApplicationLicenseHistory createLicense(Long productId, Long ownerId, Long licenseTypeId) {
+    public Long createLicense(Long productId, Long ownerId, Long licenseTypeId, ApplicationUser user, Long count) {
         ApplicationLicenseType licenseType = licenseTypeService.getLicenseTypeById(licenseTypeId).get();
         ApplicationProduct product = productService.getProductById(productId).get();
         ApplicationLicense newLicense = new ApplicationLicense();
-        newLicense.setCode(String.valueOf(UUID.randomUUID()));
+        String uid = String.valueOf(UUID.randomUUID());
+        while (licenseRepository.findByCode(uid).isPresent()){
+            uid = String.valueOf(UUID.randomUUID());
+        }
+        newLicense.setCode(uid);
         newLicense.setProduct(product);
         newLicense.setLicenseType(licenseType);
         newLicense.setBlocked(product.isBlocked());
-        newLicense.setDeviceCount(0);
-        newLicense.setOwnerId(ownerId);
+        newLicense.setDeviceCount(count);
+        newLicense.setOwnerId(userDetailsServiceImpl.getUserById(ownerId).get());
         newLicense.setDuration(licenseType.getDefaultDuration());
         newLicense.setDescription(licenseType.getDescription());
 
         licenseRepository.save(newLicense);
 
-        return licenseHistoryService.createNewRecord("Not activated", "Created new license", null,
+        licenseHistoryService.createNewRecord("Not activated", "Created new license", user,
                 licenseRepository.findTopByOrderByIdDesc().get());
+
+        return licenseRepository.findTopByOrderByIdDesc().get().getId();
     }
 
-    @SneakyThrows
-    public List<ApplicationTicket> getActiveLicensesForDevice(ApplicationDevice device) {
+    //TODO 1. Посчитать время жизни тикета
+
+    public ApplicationTicket getActiveLicensesForDevice(ApplicationDevice device, String code) {
         List<ApplicationDeviceLicense> applicationDeviceLicensesList = deviceLicenseService.getAllLicenseById(device);
         List<Long> licenseIds = applicationDeviceLicensesList.stream()
                 .map(license -> license.getLicense() != null ? license.getLicense().getId() : null)
                 .collect(Collectors.toList());
-        List<ApplicationLicense> applicationLicenseList = licenseRepository.findAllByIdIn(licenseIds);
+        Optional<ApplicationLicense> applicationLicense = licenseRepository.findByIdInAndCode(licenseIds, code);
 
-        return applicationLicenseList.stream()
-                .map(license -> convertToTicket(license, device.getId()))
-                .collect(Collectors.toList());
-    }
-
-    @SneakyThrows
-    private ApplicationTicket convertToTicket(ApplicationLicense license, Long deviceId) {
         ApplicationTicket ticket = new ApplicationTicket();
-        ticket.setCurrentDate(new Date());
-        ticket.setUserId(license.getOwnerId());
-        ticket.setDeviceId(deviceId);
-        ticket.setLifetime("One hour");
-        ticket.setActivationDate(license.getFirstActivationDate());
-        ticket.setExpirationDate(license.getEndingDate());
-        ticket.setLicenseBlocked(license.isBlocked());
-        ticket.setDigitalSignature(makeSignature(ticket));
+
+        if (applicationLicense.isEmpty()){
+            ticket.setInfo("License was not found");
+            ticket.setStatus("Error");
+            return ticket;
+        }
+        ticket = createTicket(applicationLicense.get().getUser(), device, applicationLicense.get(),
+                "Info about license", "OK");
+
         return ticket;
     }
 
-    @SneakyThrows
-    private String makeSignature(ApplicationTicket ticket) {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        PrivateKey privateKey = keyPair.getPrivate();
-        PublicKey publicKey = keyPair.getPublic();
-        ObjectMapper objectMapper = new ObjectMapper();
-        String res = objectMapper.writeValueAsString(ticket);
 
-        Signature signature = Signature.getInstance("SHA256withRSA");
-        signature.initSign(privateKey);
-        signature.update(res.getBytes());
+    private String makeSignature(ApplicationTicket ticket)  {
+        try{
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+            KeyPair keyPair = keyPairGenerator.generateKeyPair();
+            PrivateKey privateKey = keyPair.getPrivate();
+            PublicKey publicKey = keyPair.getPublic();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String res = objectMapper.writeValueAsString(ticket);
 
-        return Base64.getEncoder().encodeToString(signature.sign());
+            Signature signature = Signature.getInstance("SHA256withRSA");
+            signature.initSign(privateKey);
+            signature.update(res.getBytes());
+
+            return Base64.getEncoder().encodeToString(signature.sign());
+        }
+        catch (Exception e){
+            return "Something went wrong. The signature is not valid";
+        }
     }
 
-    @SneakyThrows
+    public ApplicationTicket createTicket(ApplicationUser user, ApplicationDevice device,
+                                          ApplicationLicense license, String info, String status) {
+        ApplicationTicket ticket = new ApplicationTicket();
+        ticket.setCurrentDate(new Date());
+
+        if (user != null){
+            ticket.setUserId(user.getId());
+        }
+
+        if (device != null){
+            ticket.setDeviceId(device.getId());
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.HOUR, 1);
+        ticket.setLifetime(calendar.getTime());
+
+        if (license != null){
+            ticket.setActivationDate(license.getFirstActivationDate());
+            ticket.setExpirationDate(license.getEndingDate());
+            ticket.setLicenseBlocked(license.isBlocked());
+        }
+
+        ticket.setInfo(info);
+        ticket.setDigitalSignature(makeSignature(ticket));
+        ticket.setStatus(status);
+        return ticket;
+    }
+
     public ApplicationTicket activateLicense(String code, ApplicationDevice device, ApplicationUser user) {
-        ApplicationTicket applicationTicket = new ApplicationTicket();
+        ApplicationTicket ticket = new ApplicationTicket();
         Optional<ApplicationLicense> license = licenseRepository.findByCode(code);
-        if (!license.isPresent()) {
-            applicationTicket.setInfo("The license was not found");
-            return applicationTicket;
+        if (license.isEmpty()) {
+            ticket.setInfo("The license was not found");
+            ticket.setStatus("Error");
+            deviceServiceImpl.deleteLastDevice(user);
+            return ticket;
         }
 
         ApplicationLicense newLicense = license.get();
-        if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())){
-            applicationTicket.setInfo("Activation is not possible");
-            return applicationTicket;
+        if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
+                || newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId()) ||
+                Objects.equals(deviceLicenseService.getDeviceCountForLicense(newLicense.getId()), newLicense.getDeviceCount())){
+            ticket.setInfo("Activation is not possible");
+            ticket.setStatus("Error");
+            deviceServiceImpl.deleteLastDevice(user);
+            return ticket;
         }
 
         if (newLicense.getFirstActivationDate() == null){
-            Date currentDate = new Date();
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentDate);
-            calendar.add(Calendar.DAY_OF_MONTH, newLicense.getDuration());
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_MONTH, Math.toIntExact(newLicense.getDuration()));
             newLicense.setEndingDate(calendar.getTime());
             newLicense.setFirstActivationDate(new Date());
+            newLicense.setUser(user);
         }
-
-        newLicense.setUser(user);
-        newLicense.setDeviceCount(newLicense.getDeviceCount() + 1);
 
         deviceLicenseService.createDeviceLicense(newLicense, device);
         licenseRepository.save(newLicense);
         licenseHistoryService.createNewRecord("Activated", "Valid license", user,
                 newLicense);
 
-        applicationTicket.setCurrentDate(new Date());
-        applicationTicket.setUserId(user.getId());
-        applicationTicket.setDeviceId(device.getId());
-        applicationTicket.setLifetime("One hour");
-        applicationTicket.setActivationDate(newLicense.getFirstActivationDate());
-        applicationTicket.setExpirationDate(newLicense.getEndingDate());
-        applicationTicket.setLicenseBlocked(newLicense.isBlocked());
-        applicationTicket.setInfo("The license has been successfully activated");
-        applicationTicket.setDigitalSignature(makeSignature(applicationTicket));
+        ticket = createTicket(user, device, newLicense, "The license has been successfully activated", "OK");
 
-        return applicationTicket;
+        return ticket;
+    }
+
+    public String updateLicense(Long id, Long ownerId, Long productId, Long typeId, Boolean isBlocked,
+                                String description, Long deviceCount){
+        Optional<ApplicationLicense> license = getLicenseById(id);
+        if (license.isEmpty()) {
+            return "License Not Found";
+        }
+
+        ApplicationLicense newLicense = license.get();
+        newLicense.setCode(String.valueOf(UUID.randomUUID()));
+        if (productService.getProductById(productId).isEmpty()){
+            return "Product Not Found";
+        }
+
+        newLicense.setProduct(productService.getProductById(productId).get());
+        if (licenseTypeService.getLicenseTypeById(typeId).isEmpty()){
+            return "License Type Not Found";
+        }
+
+        newLicense.setLicenseType(licenseTypeService.getLicenseTypeById(typeId).get());
+        newLicense.setDuration(licenseTypeService.getLicenseTypeById(typeId).get().getDefaultDuration());
+        newLicense.setBlocked(isBlocked);
+        newLicense.setOwnerId(userDetailsServiceImpl.getUserById(ownerId).get());
+        newLicense.setDescription(description);
+        newLicense.setDeviceCount(deviceCount);
+
+        licenseRepository.save(newLicense);
+
+        return "OK";
     }
 
     public ApplicationTicket renewalLicense(String code, ApplicationUser user) {
         ApplicationTicket ticket = new ApplicationTicket();
         Optional<ApplicationLicense> license = licenseRepository.findByCode(code);
-        if (!license.isPresent()) {
+        if (license.isEmpty()) {
             ticket.setInfo("The license key is not valid");
+            ticket.setStatus("Error");
             return ticket;
         }
         ApplicationLicense newLicense = license.get();
         if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
-                || newLicense.getOwnerId() != user.getId()) {
+                || !Objects.equals(newLicense.getOwnerId().getId(), user.getId()) || newLicense.getFirstActivationDate() == null) {
             ticket.setInfo("It is not possible to renew the license");
+            ticket.setStatus("Error");
             return ticket;
         }
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(newLicense.getEndingDate());
-        calendar.add(Calendar.DAY_OF_MONTH, newLicense.getDuration());
+        calendar.add(Calendar.DAY_OF_MONTH, Math.toIntExact(newLicense.getDuration()));
         newLicense.setEndingDate(calendar.getTime());
 
-        newLicense.setUser(user);
         licenseRepository.save(newLicense);
         licenseHistoryService.createNewRecord("Renewal", "Valid license", user,
                 newLicense);
 
-        ticket.setCurrentDate(new Date());
-        ticket.setUserId(user.getId());
-        ticket.setLifetime("One hour");
-        ticket.setActivationDate(newLicense.getFirstActivationDate());
-        ticket.setExpirationDate(newLicense.getEndingDate());
-        ticket.setLicenseBlocked(newLicense.isBlocked());
-        ticket.setInfo("The license has been successfully renewed");
-        ticket.setDigitalSignature(makeSignature(ticket));
+        ticket = createTicket(user, null, newLicense, "The license has been successfully renewed", "OK");
 
         return ticket;
     }

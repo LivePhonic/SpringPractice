@@ -7,8 +7,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LicenseInfoRequest {
+public class ProductUpdateRequest {
+    private Long productId;
     private String name;
-    private String mac_address;
-    private String activationCode;
+    private Boolean isBlocked;
 }

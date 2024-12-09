@@ -17,7 +17,6 @@ import ru.mtuci.demo.service.impl.DeviceServiceImpl;
 import ru.mtuci.demo.service.impl.LicenseServiceImpl;
 import ru.mtuci.demo.service.impl.UserDetailsServiceImpl;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,19 +32,23 @@ public class LicenseInfoController {
     @PostMapping("/info")
     public ResponseEntity<?> infoLicense(@RequestBody LicenseInfoRequest request, HttpServletRequest req) {
         try {
-            String mac = request.getMac_address();
-            String name = request.getName();
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
-            Optional<ApplicationDevice> device = deviceService.findDeviceByInfo(user, mac, name);
-            if (!device.isPresent()) {
+            Optional<ApplicationDevice> device = deviceService.getDeviceByInfo(user, request.getMac_address(),
+                    request.getName());
+            if (device.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("The device was not found.");
             }
 
-            List<ApplicationTicket> tickets = licenseService.getActiveLicensesForDevice(device.get());
+            ApplicationTicket ticket = licenseService.getActiveLicensesForDevice(device.get(), request.getActivationCode());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(tickets);
+            if (!ticket.getStatus().equals("OK")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ticket.getInfo());
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(ticket);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Oops, something went wrong....");

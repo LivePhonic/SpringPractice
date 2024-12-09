@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.mtuci.demo.model.ApplicationUser;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<ApplicationUser, Long> {

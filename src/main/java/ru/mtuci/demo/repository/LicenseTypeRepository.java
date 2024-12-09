@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface LicenseTypeRepository extends JpaRepository<ApplicationLicenseType, Long> {
     Optional<ApplicationLicenseType> findById(Long id);
+    Optional<ApplicationLicenseType> findTopByOrderByIdDesc();
 }

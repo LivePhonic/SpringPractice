@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "license_type")
 @Getter
@@ -23,7 +21,7 @@ public class ApplicationLicenseType {
 
     private String name;
 
-    private int defaultDuration;
+    private Long defaultDuration;
 
     private String description;
 }

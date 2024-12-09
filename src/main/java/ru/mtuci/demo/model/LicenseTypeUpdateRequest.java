@@ -7,8 +7,9 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LicenseInfoRequest {
+public class LicenseTypeUpdateRequest {
+    private Long duration;
+    private String description;
     private String name;
-    private String mac_address;
-    private String activationCode;
+    private Long id;
 }

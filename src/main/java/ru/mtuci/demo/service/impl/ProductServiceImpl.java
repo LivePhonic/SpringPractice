@@ -6,6 +6,8 @@ import ru.mtuci.demo.repository.ProductRepository;
 
 import java.util.Optional;
 
+//TODO: 1. Маловато методов. В других классах тоже. Расширьте
+
 @Service
 public class ProductServiceImpl {
     private final ProductRepository productRepository;
@@ -16,5 +18,26 @@ public class ProductServiceImpl {
 
     public Optional<ApplicationProduct> getProductById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public String upadteProduct(Long id, String name, Boolean isBlocked) {
+        Optional<ApplicationProduct> product = getProductById(id);
+        if (product.isEmpty()) {
+            return "Product Not Found";
+        }
+
+        ApplicationProduct newProduct = product.get();
+        newProduct.setName(name);
+        newProduct.setBlocked(isBlocked);
+        productRepository.save(newProduct);
+        return "OK";
+    }
+
+    public Long createProduct(String name, Boolean isBlocked){
+        ApplicationProduct product = new ApplicationProduct();
+        product.setBlocked(isBlocked);
+        product.setName(name);
+        productRepository.save(product);
+        return productRepository.findTopByOrderByIdDesc().get().getId();
     }
 }

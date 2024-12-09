@@ -3,13 +3,15 @@ spring:
     name: demo
   datasource:
     url: jdbc:postgresql://localhost:5432/demo
-    username: postgres
-    password: 1234
+    #Ваше приложение спасает только то, что оно живет локально. Спрятать
+    username: ${DB_LOGIN}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
 jwt:
-  secret: SuuuuuuuuperCuteSecret~You'llNeverKnowHim.
+  #Теперь я тоже умею выпускать ваши токены
+  secret: ${JWT_SECRET}
   expiration: 3600000

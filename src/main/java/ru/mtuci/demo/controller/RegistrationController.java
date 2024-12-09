@@ -40,7 +40,7 @@ public class RegistrationController {
 
             userRepository.save(newUser);
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Successful registration.");
+            return ResponseEntity.status(HttpStatus.OK).body("Successful registration.");
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Oops, something went wrong....");
         }
