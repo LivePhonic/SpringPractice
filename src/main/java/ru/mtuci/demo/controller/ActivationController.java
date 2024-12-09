@@ -30,7 +30,7 @@ public class ActivationController {
     private final LicenseServiceImpl licenseService;
 
     @PostMapping("/activate")
-    public ResponseEntity<?> createLicense(@RequestBody ActivationRequest request, HttpServletRequest req) {
+    public ResponseEntity<?> activateLicense(@RequestBody ActivationRequest request, HttpServletRequest req) {
         try {
             String email = jwtTokenProvider.getUsername(req.getHeader("Authorization").substring(7));
             ApplicationUser user = userDetailsService.getUserByEmail(email).get();
