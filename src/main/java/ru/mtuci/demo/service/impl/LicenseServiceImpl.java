@@ -158,7 +158,7 @@ public class LicenseServiceImpl {
         ApplicationLicense newLicense = license.get();
         if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
                 || newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId()) ||
-                Objects.equals(deviceLicenseService.getDeviceCountForLicense(newLicense.getId()), newLicense.getDeviceCount())){
+                deviceLicenseService.getDeviceCountForLicense(newLicense.getId()) >= newLicense.getDeviceCount()){
             ticket.setInfo("Activation is not possible");
             ticket.setStatus("Error");
             deviceServiceImpl.deleteLastDevice(user);
