@@ -3,20 +3,20 @@ spring:
     name: demo
   datasource:
     url: jdbc:postgresql://localhost:5432/demo
-    username: postgres
-    password: 1234
+    username: ${USERNAME}
+    password: ${PASS}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
 jwt:
-  secret: sdkf9e0324mrtf209ir2kmjf2-3049gpre34
+  secret: ${JWT}
   expiration: 3600000
 
 server:
   ssl:
     key-store-type: JKS
     key-store: classpath:server.jks
-    key-store-password: serverPass
+    key-store-password: ${SERVERPASS}
     key-alias: server
