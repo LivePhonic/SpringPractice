@@ -7,8 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivationRequest {
-    private String activationCode;
+public class LicensesAllRequest {
     private String name;
     private String mac_address;
 }

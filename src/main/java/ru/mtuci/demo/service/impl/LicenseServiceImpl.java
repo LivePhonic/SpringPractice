@@ -93,6 +93,19 @@ public class LicenseServiceImpl {
         return ticket;
     }
 
+    public List<String> getAllLicenseForDevice(ApplicationDevice device) {
+        List<ApplicationDeviceLicense> applicationDeviceLicensesList = deviceLicenseService.getAllLicenseById(device);
+        return applicationDeviceLicensesList.stream()
+                .map(license -> license.getLicense() != null ? license.getLicense().getCode() : null)
+                .toList();
+    }
+
+    public List<String> getAllLicensesRenewalForUser(ApplicationUser user) {
+        List<ApplicationLicense> applicationLicenseList = licenseRepository.findByOwnerId(user);
+        return applicationLicenseList.stream()
+                .map(license -> license != null ? license.getCode() : null)
+                .toList();
+    }
 
     private String makeSignature(ApplicationTicket ticket)  {
         try{
@@ -140,8 +153,8 @@ public class LicenseServiceImpl {
         }
 
         ticket.setInfo(info);
-        ticket.setDigitalSignature(makeSignature(ticket));
         ticket.setStatus(status);
+        ticket.setDigitalSignature(makeSignature(ticket));
         return ticket;
     }
 
@@ -156,8 +169,8 @@ public class LicenseServiceImpl {
         }
 
         ApplicationLicense newLicense = license.get();
-        if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
-                || newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId()) ||
+        if (newLicense.isBlocked() || (newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate()))
+                || (newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId())) ||
                 deviceLicenseService.getDeviceCountForLicense(newLicense.getId()) >= newLicense.getDeviceCount()){
             ticket.setInfo("Activation is not possible");
             ticket.setStatus("Error");
@@ -168,9 +181,9 @@ public class LicenseServiceImpl {
         if (newLicense.getFirstActivationDate() == null){
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
+            newLicense.setFirstActivationDate(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, Math.toIntExact(newLicense.getDuration()));
             newLicense.setEndingDate(calendar.getTime());
-            newLicense.setFirstActivationDate(new Date());
             newLicense.setUser(user);
         }
 

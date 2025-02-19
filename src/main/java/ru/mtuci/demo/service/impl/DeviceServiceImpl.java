@@ -30,18 +30,14 @@ public class DeviceServiceImpl {
         lastDevice.ifPresent(deviceRepository::delete);
     }
 
-    public ApplicationDevice registerOrUpdateDevice(String mac, String name, ApplicationUser user, Long deviceId){
-        Optional<ApplicationDevice> device = getDeviceByIdAndUser(user, deviceId);
-        ApplicationDevice newDevice = new ApplicationDevice();
-        if (device.isPresent()) {
-            newDevice = device.get();
-        }
+    public ApplicationDevice registerOrUpdateDevice(String mac, String name, ApplicationUser user) {
+        ApplicationDevice newDevice = getDeviceByInfo(user, mac, name)
+                .orElse(new ApplicationDevice());
 
         newDevice.setName(name);
         newDevice.setMacAddress(mac);
         newDevice.setUser(user);
 
-        deviceRepository.save(newDevice);
-        return newDevice;
+        return deviceRepository.save(newDevice);
     }
 }

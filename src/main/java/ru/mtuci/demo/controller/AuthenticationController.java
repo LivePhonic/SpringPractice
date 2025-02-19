@@ -43,7 +43,7 @@ public class AuthenticationController {
             String token = jwtTokenProvider
                     .createToken(email, user.getRole().getGrantedAuthorities());
 
-            return ResponseEntity.ok(new AuthenticationResponse(email, token));
+            return ResponseEntity.ok(new AuthenticationResponse(email, token, user.getUsername()));
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid email or password");
