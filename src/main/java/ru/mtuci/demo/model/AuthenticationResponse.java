@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class AuthenticationResponse {
     private String email;
-    private String token;
+    private TokenResponse tokens;
     private String username;
 }

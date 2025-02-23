@@ -7,18 +7,12 @@ import ru.mtuci.demo.repository.DeviceRepository;
 
 import java.util.Optional;
 
-//TODO: 1. Странная логика в registerOrUpdateDevice. Вы не обновите информацию, а всегда будете создавать новое устройство
-
 @Service
 public class DeviceServiceImpl {
     private final DeviceRepository deviceRepository;
 
     public DeviceServiceImpl(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
-    }
-
-    public Optional<ApplicationDevice> getDeviceByIdAndUser(ApplicationUser user, Long id) {
-        return deviceRepository.findByIdAndUser(id, user);
     }
 
     public Optional<ApplicationDevice> getDeviceByInfo(ApplicationUser user, String mac_address, String name) {

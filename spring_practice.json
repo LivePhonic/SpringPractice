@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "da3b37eb-c86b-4f94-a31c-5500f4d31d7d",
-		"name": "РБПО Практика 2024",
+		"_postman_id": "c883f39d-daab-4280-8c84-fe02fe89a81c",
+		"name": "spring_practice",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39125017"
 	},
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"user@test.com\",\r\n  \"password\": \"user\"\r\n}",
+					"raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  \"password\": \"admin\",\r\n  \"deviceId\": \"1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +21,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/login",
-					"protocol": "http",
+					"raw": "https://localhost:1337/auth/login",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"auth",
 						"login"
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"username\": \"user\",\r\n  \"email\": \"user@test.com\",\r\n  \"password\": \"user\"\r\n}",
+					"raw": "{\r\n  \"username\": \"user1\",\r\n  \"email\": \"user1@test.com\",\r\n  \"password\": \"user1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,12 +50,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/register",
-					"protocol": "http",
+					"raw": "https://localhost:1337/auth/register",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"auth",
 						"register"
@@ -72,7 +72,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMzNjg1MjAyLCJleHAiOjE3MzM2ODg4MDJ9.cKSWHXuJMIceEG4OjohAfMtxCklyKFAALL_DUw_r-u4",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzM2MDA4MDYwLCJleHAiOjE3MzYwMTE2NjB9.aM7Dol8YbbJRIsdh2N1zFucnfb_MUNnMvDdskbTOe5o",
 							"type": "string"
 						}
 					]
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"productId\": \"202\",\r\n  \"ownerId\": \"102\",\r\n  \"licenseTypeId\": \"52\",\r\n  \"count\": \"1\"\r\n}",
+					"raw": "{\r\n  \"productId\": \"202\",\r\n  \"ownerId\": \"103\",\r\n  \"licenseTypeId\": \"52\",\r\n  \"count\": \"5\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,12 +89,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/license/create",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/license/create",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"license",
@@ -112,7 +112,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczMzY4NjcwMywiZXhwIjoxNzMzNjkwMzAzfQ.rbeMqNtEnGAPC510pA58p_avikwSUIupfzzkjNJOQHI",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzM1NzU2OTAxLCJleHAiOjE3MzU3NjA1MDF9.Qsjoa-wOjjXpZhIFz9t3o7f_eZ6IK9BmWTSdmRWRgxY",
 							"type": "string"
 						}
 					]
@@ -121,7 +121,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"60b513de-d928-4c42-bdb3-9140e4609239\",\r\n    \"name\": \"HDDDDDDDdddd\",\r\n    \"mac_address\": \"BB:BB:BB:AA:AA:AA\",\r\n    \"deviceId\": \"123\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"00e8415a-3e9c-4225-a15f-897cefce2187\",\r\n    \"name\": \"DESKTOP-9MS1G7L\",\r\n    \"mac_address\": \"7A:79:19:4C:95:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,12 +129,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/license/activate",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/license/activate",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"license",
@@ -161,7 +161,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"6512223d-d6e8-43d3-8385-40c86a948c85\",\r\n    \"name\": \"HPhone\",\r\n    \"mac_address\": \"AA:AA:AA:AA:AA:AA\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"r\",\r\n    \"name\": \"HPhone\",\r\n    \"mac_address\": \"AA:AA:AA:AA:AA:AA\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -169,12 +169,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/license/info",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/license/info",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"license",
@@ -209,12 +209,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/license/renewal",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/license/renewal",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"license",
@@ -249,12 +249,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/product/create",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/product/create",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"product",
@@ -289,12 +289,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/product/update",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/product/update",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"product",
@@ -329,12 +329,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/type/create",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/type/create",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"type",
@@ -369,12 +369,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/type/update",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/type/update",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"type",
@@ -409,16 +409,152 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/license/update",
-					"protocol": "http",
+					"raw": "https://localhost:1337/api/license/update",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "1337",
 					"path": [
 						"api",
 						"license",
 						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LicensesAll",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczNjAwMjk1MSwiZXhwIjoxNzM2MDA2NTUxfQ.n19t7ZSrwZm0UjUE3XDe9VCkOLRrEZuxj-z_bClOcg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"DESKTOP-9MS1G7L\",\r\n    \"mac_address\": \"7A:79:19:4C:95:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/license/all/licenses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"license",
+						"all",
+						"licenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LicensesRenewalAll",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczNjAwMjk1MSwiZXhwIjoxNzM2MDA2NTUxfQ.n19t7ZSrwZm0UjUE3XDe9VCkOLRrEZuxj-z_bClOcg0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:1337/api/license/all/renewal",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"license",
+						"all",
+						"renewal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczNjA4NzE0OCwiZXhwIjoxNzM2MDkwNzQ4fQ.ZHI6Qzc6eq1I0NurIFwC-1Vw3_7PK4PmfCO16iHYejI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:1337/api/profile/info",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"profile",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RefreshToken",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"refreshToken\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInRva2VuX3R5cGUiOiJyZWZyZXNoIiwiZGV2aWNlSWQiOjEsImlhdCI6MTc0MDMyMTQ0NCwiZXhwIjoxNzQwNDA3ODQ0fQ.WWu4wJyLcFJFS3qj_qqfajXdKjRBABIZhoehI10x3lA\",\r\n  \"deviceId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/auth/refresh",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"auth",
+						"refresh"
 					]
 				}
 			},

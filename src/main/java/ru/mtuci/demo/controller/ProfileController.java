@@ -9,11 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mtuci.demo.configuration.JwtTokenProvider;
 import ru.mtuci.demo.model.ApplicationUser;
-import ru.mtuci.demo.service.impl.DeviceServiceImpl;
-import ru.mtuci.demo.service.impl.LicenseServiceImpl;
 import ru.mtuci.demo.service.impl.UserDetailsServiceImpl;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")

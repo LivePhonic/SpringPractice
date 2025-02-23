@@ -3,22 +3,11 @@ package ru.mtuci.demo.service.impl;
 import org.springframework.stereotype.Service;
 import ru.mtuci.demo.model.*;
 import ru.mtuci.demo.repository.LicenseRepository;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 import java.security.*;
 import java.util.stream.Collectors;
-
-//TODO: 1. Количество доступных устройств при создании всегда 0. DeviceCount - Это максимально возможное число устройств
-//TODO: 2. Возможна ли коллизия при генерации кода активации?
-//TODO: 3. Использование @SneakyThrows может привести к неявным ошибкам
-//TODO: 4. ticket.setLifetime("One hour"); - это будет тяжело парсить на стороне клиента
-//TODO: 5. Проверьте установку дат при первой активации
-//TODO: 6. Нужно ли при повторной активации устанавливать пользователя?
-//TODO: 7. При активации лицензии дублируется логика создания тикета
-//TODO: 8. Продлить лицензию может кто угодно
-//TODO: 9. При продлении лицензии не нужно менять пользователя
 
 @Service
 public class LicenseServiceImpl {
@@ -32,7 +21,8 @@ public class LicenseServiceImpl {
 
     public LicenseServiceImpl(LicenseRepository licenseRepository, LicenseTypeServiceImpl licenseTypeService,
                               ProductServiceImpl productService, DeviceLicenseServiceImpl deviceLicenseService,
-                              LicenseHistoryServiceImpl licenseHistoryService, UserDetailsServiceImpl userDetailsServiceImpl, DeviceServiceImpl deviceServiceImpl) {
+                              LicenseHistoryServiceImpl licenseHistoryService,
+                              UserDetailsServiceImpl userDetailsServiceImpl, DeviceServiceImpl deviceServiceImpl) {
         this.licenseRepository = licenseRepository;
         this.licenseTypeService = licenseTypeService;
         this.productService = productService;
@@ -70,8 +60,6 @@ public class LicenseServiceImpl {
 
         return licenseRepository.findTopByOrderByIdDesc().get().getId();
     }
-
-    //TODO 1. Посчитать время жизни тикета
 
     public ApplicationTicket getActiveLicensesForDevice(ApplicationDevice device, String code) {
         List<ApplicationDeviceLicense> applicationDeviceLicensesList = deviceLicenseService.getAllLicenseById(device);
@@ -169,9 +157,10 @@ public class LicenseServiceImpl {
         }
 
         ApplicationLicense newLicense = license.get();
-        if (newLicense.isBlocked() || (newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate()))
-                || (newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId())) ||
-                deviceLicenseService.getDeviceCountForLicense(newLicense.getId()) >= newLicense.getDeviceCount()){
+        if (newLicense.isBlocked()
+                || (newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate()))
+                || (newLicense.getUser() != null && !Objects.equals(newLicense.getUser().getId(), user.getId()))
+                || deviceLicenseService.getDeviceCountForLicense(newLicense.getId()) >= newLicense.getDeviceCount()){
             ticket.setInfo("Activation is not possible");
             ticket.setStatus("Error");
             deviceServiceImpl.deleteLastDevice(user);
@@ -236,8 +225,10 @@ public class LicenseServiceImpl {
             return ticket;
         }
         ApplicationLicense newLicense = license.get();
-        if (newLicense.isBlocked() || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
-                || !Objects.equals(newLicense.getOwnerId().getId(), user.getId()) || newLicense.getFirstActivationDate() == null) {
+        if (newLicense.isBlocked()
+                || newLicense.getEndingDate() != null && new Date().after(newLicense.getEndingDate())
+                || !Objects.equals(newLicense.getOwnerId().getId(), user.getId())
+                || newLicense.getFirstActivationDate() == null) {
             ticket.setInfo("It is not possible to renew the license");
             ticket.setStatus("Error");
             return ticket;

@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mtuci.demo.configuration.JwtTokenProvider;
 import ru.mtuci.demo.model.ApplicationUser;
 import ru.mtuci.demo.model.AuthenticationRequest;
 import ru.mtuci.demo.model.AuthenticationResponse;
+import ru.mtuci.demo.model.TokenResponse;
 import ru.mtuci.demo.repository.UserRepository;
+import ru.mtuci.demo.service.impl.TokenService;
 
 @RestController
 @RequestMapping("/auth")
@@ -24,7 +25,7 @@ public class AuthenticationController {
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
@@ -40,10 +41,9 @@ public class AuthenticationController {
                                     email, request.getPassword())
                     );
 
-            String token = jwtTokenProvider
-                    .createToken(email, user.getRole().getGrantedAuthorities());
+            TokenResponse tokenResponse = tokenService.issueTokenPair(email, request.getDeviceId(), user.getRole().getGrantedAuthorities());
 
-            return ResponseEntity.ok(new AuthenticationResponse(email, token, user.getUsername()));
+            return ResponseEntity.ok(new AuthenticationResponse(email, tokenResponse, user.getUsername()));
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Invalid email or password");

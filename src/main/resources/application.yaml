@@ -12,7 +12,10 @@ spring:
 
 jwt:
   secret: ${JWT}
-  expiration: 3600000
+  access:
+    expiration: 300000
+  refresh:
+    expiration: 86400000
 
 server:
   port: 1337

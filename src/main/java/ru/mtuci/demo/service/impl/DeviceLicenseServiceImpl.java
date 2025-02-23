@@ -8,17 +8,13 @@ import ru.mtuci.demo.repository.DeviceLicenseRepository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class DeviceLicenseServiceImpl {
     private final DeviceLicenseRepository deviceLicenseRepository;
 
     public DeviceLicenseServiceImpl(DeviceLicenseRepository deviceLicenseRepository) {
         this.deviceLicenseRepository = deviceLicenseRepository;
-    }
-
-    public Optional<ApplicationDeviceLicense> getDeviceById(Long id) {
-        return deviceLicenseRepository.findById(id);
     }
 
     public Long getDeviceCountForLicense(Long licenseId) {

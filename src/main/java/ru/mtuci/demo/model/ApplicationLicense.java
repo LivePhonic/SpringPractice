@@ -8,9 +8,6 @@ import lombok.Setter;
 
 import java.util.Date;
 
-//TODO: 1. Связь с owner должна быть такая же, как с user
-//TODO: 2. int может быть маловат для длительности
-
 @Entity
 @Table(name = "license")
 @Getter

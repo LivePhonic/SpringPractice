@@ -22,8 +22,6 @@ public class LicenseCreateController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
 
-    //TODO: 1. Неверно используются Http статусы. Они относятся к состоянию запроса, а не к вашей логике. Лучше отправить 200ОК
-
     @PostMapping("/create")
     @PreAuthorize("hasAnyAuthority('modification')")
     public ResponseEntity<?> createLicense(@RequestBody LicenseCreateRequest request, HttpServletRequest req) {
