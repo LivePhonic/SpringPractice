@@ -49,13 +49,12 @@ public class TokenService {
     }
 
     public TokenResponse refreshTokenPair(Long deviceId, String refreshToken) {
-        UserSession session = userSessionRepository.findByRefreshToken(refreshToken).orElseThrow(
-                () -> new IllegalArgumentException("Session not found for refresh token: " + refreshToken)
-        );
+        UserSession session = userSessionRepository.findByRefreshToken(refreshToken).orElse(null);
 
-        if (session.getStatus() != SessionStatus.ACTIVE || !Objects.equals(session.getDeviceId(), deviceId)) {
+        if (session == null || session.getStatus() != SessionStatus.ACTIVE
+                || !Objects.equals(session.getDeviceId(), deviceId)) {
             blockAllSessionsForUser(session.getEmail());
-            throw new IllegalArgumentException("Invalid session");
+            return null;
         }
 
         session.setStatus(SessionStatus.USED);

@@ -23,7 +23,9 @@ public class TokenRefreshController {
         try {
 
             TokenResponse tokenResponse = tokenService.refreshTokenPair(request.getDeviceId(), request.getRefreshToken());
-
+            if (tokenResponse == null) {
+                return ResponseEntity.ok("Invalid refresh token or device id");
+            }
             return ResponseEntity.ok(tokenResponse);
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
