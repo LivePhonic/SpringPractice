@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c883f39d-daab-4280-8c84-fe02fe89a81c",
+		"_postman_id": "bcba701c-9e2b-4a87-ae3e-e1dce30d0d99",
 		"name": "spring_practice",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39125017"
@@ -555,6 +555,308 @@
 					"path": [
 						"auth",
 						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualSignatures",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM1MzY3NywiZXhwIjoxNzQzMzUzOTc3fQ.2RXHf3lXVKKleE6_uOmWDTVbPvX0EA085_yYQGsVNk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/actual",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"actual"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureDiff",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM1NTcwMiwiZXhwIjoxNzQzMzU2MDAyfQ.QBaRcrkzeZIG6rQ0BVpWbLGbvKSTP_WrCeEp20o7h7Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"since\": \"2025-03-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/updated-after",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"updated-after"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSignatureByGUIDS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM1MzY3NywiZXhwIjoxNzQzMzUzOTc3fQ.2RXHf3lXVKKleE6_uOmWDTVbPvX0EA085_yYQGsVNk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"guids\": [\r\n        \"6b89dea8-0538-4b4d-bcbc-04b96ca9a53d\",\r\n        \"550e8400-e29b-41d4-a716-446655440001\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/by-guids",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"by-guids"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureAdd",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM3MjA2NSwiZXhwIjoxNzQzMzcyMzY1fQ.OQBpIRfSmOu-ccPxlm2d7Mnd7wY-kehk5-hB66OqUqQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"threatName\": \"Example Threat3\",\r\n    \"firstBytes\": \"ABCD1234EFGH5678\",\r\n    \"remainderLength\": 4,\r\n    \"fileType\": \"malware\",\r\n    \"offsetStart\": 0,\r\n    \"offsetEnd\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureDelete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM2NzI3NywiZXhwIjoxNzQzMzY3NTc3fQ.FaHJfSZhg5dWLKu50eefsefoYIykiOum1CVmkaZi5ss",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"signatureUUID\": \"91e21903-31c6-4121-a3f9-6fa590b1c26e\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/delete",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureUpdate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM3MDE1MywiZXhwIjoxNzQzMzcwNDUzfQ.VDdknaft7INs0HPFm1XuqonTAL5Yie0jG7i65vqmFuA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"signatureId\": \"02ef345b-51d5-47ac-9982-59f2acc6b91a\",\r\n    \"threatName\": \"Example Threat22222\",\r\n    \"firstBytes\": \"ABCD1234EFGH5678\",\r\n    \"remainderLength\": \"\",\r\n    \"fileType\": \"malwareeee\",\r\n    \"offsetStart\": 0,\r\n    \"offsetEnd\": 101\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/update",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureByStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM2ODI5MywiZXhwIjoxNzQzMzY4NTkzfQ.8d9qxb0OhZYLHhAFBiiKaWPuQsvvt2dPpxnHl_PwmWU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"status\": \"DELETED\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/by-status",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"by-status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignatureAudit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM2ODkwMCwiZXhwIjoxNzQzMzY5MjAwfQ.P9SQvT_KDIpOg7wPmalnhHAjrYYuoAHUTk74D_OoX3U",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/audit",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"audit"
 					]
 				}
 			},

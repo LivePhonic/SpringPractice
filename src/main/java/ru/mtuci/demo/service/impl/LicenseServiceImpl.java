@@ -18,11 +18,12 @@ public class LicenseServiceImpl {
     private final LicenseHistoryServiceImpl licenseHistoryService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final DeviceServiceImpl deviceServiceImpl;
+    private final PrivateKey privateKey;
 
     public LicenseServiceImpl(LicenseRepository licenseRepository, LicenseTypeServiceImpl licenseTypeService,
                               ProductServiceImpl productService, DeviceLicenseServiceImpl deviceLicenseService,
                               LicenseHistoryServiceImpl licenseHistoryService,
-                              UserDetailsServiceImpl userDetailsServiceImpl, DeviceServiceImpl deviceServiceImpl) {
+                              UserDetailsServiceImpl userDetailsServiceImpl, DeviceServiceImpl deviceServiceImpl, PrivateKey privateKey) {
         this.licenseRepository = licenseRepository;
         this.licenseTypeService = licenseTypeService;
         this.productService = productService;
@@ -30,6 +31,7 @@ public class LicenseServiceImpl {
         this.licenseHistoryService = licenseHistoryService;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.deviceServiceImpl = deviceServiceImpl;
+        this.privateKey = privateKey;
     }
 
     public Optional<ApplicationLicense> getLicenseById(Long id) {
@@ -96,12 +98,7 @@ public class LicenseServiceImpl {
     }
 
     private String makeSignature(ApplicationTicket ticket)  {
-        try{
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            KeyPair keyPair = keyPairGenerator.generateKeyPair();
-            PrivateKey privateKey = keyPair.getPrivate();
-            PublicKey publicKey = keyPair.getPublic();
+        try {
             ObjectMapper objectMapper = new ObjectMapper();
             String res = objectMapper.writeValueAsString(ticket);
 
@@ -110,8 +107,7 @@ public class LicenseServiceImpl {
             signature.update(res.getBytes());
 
             return Base64.getEncoder().encodeToString(signature.sign());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return "Something went wrong. The signature is not valid";
         }
     }
