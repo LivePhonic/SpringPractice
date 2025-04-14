@@ -17,7 +17,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ApplicationSignature {
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String threatName;

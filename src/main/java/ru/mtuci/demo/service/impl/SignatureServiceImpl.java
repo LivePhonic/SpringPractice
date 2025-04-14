@@ -1,5 +1,6 @@
 package ru.mtuci.demo.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -59,12 +60,11 @@ public class SignatureServiceImpl {
     }
 
     public ApplicationSignature addSignature(String threatName, String firstBytes, Integer remainderLength,
-                                             String fileType, Integer offsetStart, Integer offsetEnd, Long userId) {
+                                             String fileType, Integer offsetStart, Integer offsetEnd, Long userId) throws JsonProcessingException {
         String hash = makeHash(firstBytes.substring(firstBytes.length() - remainderLength * 2));
 
-        String digitalSignature = makeSignature(hash);
-
         ApplicationSignature signature = new ApplicationSignature();
+        signature.setId(UUID.randomUUID());
         signature.setThreatName(threatName);
         signature.setFirstBytes(firstBytes);
         signature.setRemainderLength(remainderLength);
@@ -72,10 +72,14 @@ public class SignatureServiceImpl {
         signature.setOffsetStart(offsetStart);
         signature.setOffsetEnd(offsetEnd);
         signature.setRemainderHash(hash);
-        signature.setDigitalSignature(digitalSignature);
         Date date = new Date();
         signature.setUpdatedAt(date);
         signature.setStatus(SignatureStatus.ACTUAL);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String digitalSignature = makeSignature(objectMapper.writeValueAsString(signature));
+
+        signature.setDigitalSignature(digitalSignature);
 
         signatureRepository.save(signature);
 
@@ -105,7 +109,7 @@ public class SignatureServiceImpl {
     }
 
     public ApplicationSignature updateSignature(UUID signatureUUID, String threatName, String firstBytes, Integer remainderLength,
-                                                String fileType, Integer offsetStart, Integer offsetEnd, Long userId) {
+                                                String fileType, Integer offsetStart, Integer offsetEnd, Long userId, SignatureStatus status) throws JsonProcessingException {
         Optional<ApplicationSignature> signature = signatureRepository.findById(signatureUUID);
 
         String changedFields = "";
@@ -131,11 +135,7 @@ public class SignatureServiceImpl {
                 .getFirstBytes()
                 .substring(updateSignature.getFirstBytes().length() - updateSignature.getRemainderLength() * 2));
 
-        String digitalSignature = makeSignature(hash);
-
         updateSignature.setRemainderHash(hash);
-
-        updateSignature.setDigitalSignature(digitalSignature);
 
         if (threatName != null){
             updateSignature.setThreatName(threatName);
@@ -153,9 +153,17 @@ public class SignatureServiceImpl {
             updateSignature.setOffsetEnd(offsetEnd);
             changedFields = changedFields + "offsetEnd, ";
         }
+        if (status == SignatureStatus.ACTUAL || status == SignatureStatus.DELETED || status == SignatureStatus.CORRUPTED){
+            updateSignature.setStatus(status);
+            changedFields = changedFields + "status, ";
+        }
 
         Date date = new Date();
         updateSignature.setUpdatedAt(date);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        updateSignature.setDigitalSignature(makeSignature(objectMapper.writeValueAsString(signature)));
 
         signatureRepository.save(updateSignature);
 
@@ -166,7 +174,7 @@ public class SignatureServiceImpl {
         return updateSignature;
     }
 
-    private String makeHash(String input) {
+    public String makeHash(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
@@ -184,11 +192,8 @@ public class SignatureServiceImpl {
         }
     }
 
-    public String makeSignature(String hash) {
+    public String makeSignature(String res) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            String res = objectMapper.writeValueAsString(hash);
-
             Signature signature = Signature.getInstance("SHA256withRSA");
             signature.initSign(privateKey);
             signature.update(res.getBytes());
@@ -200,15 +205,15 @@ public class SignatureServiceImpl {
     }
 
     @Scheduled(fixedRate = 5000)
-    public void checkSignature() {
+    public void checkSignature() throws JsonProcessingException {
         List<ApplicationSignature> signatures = signatureRepository.findByUpdatedAtAfter(lastCheckTime);
         for (ApplicationSignature signature : signatures) {
-            String hash = makeHash(signature
-                    .getFirstBytes()
-                    .substring(signature.getFirstBytes().length() - signature.getRemainderLength() * 2));
+            String originalDigitalSignature = signature.getDigitalSignature();
+            signature.setDigitalSignature(null);
+            ObjectMapper objectMapper = new ObjectMapper();
 
-            String digitalSignature = makeSignature(hash);
-            if (!digitalSignature.equals(signature.getDigitalSignature()) && signature.getStatus() == SignatureStatus.ACTUAL) {
+            String computedSignature = makeSignature(objectMapper.writeValueAsString(signature));
+            if (!computedSignature.equals(originalDigitalSignature) && signature.getStatus() == SignatureStatus.ACTUAL) {
                 signatureHistoryService.createSignatureHistory(signature);
                 signature.setStatus(SignatureStatus.CORRUPTED);
                 signatureRepository.save(signature);

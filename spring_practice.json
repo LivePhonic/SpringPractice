@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bcba701c-9e2b-4a87-ae3e-e1dce30d0d99",
+		"_postman_id": "b68dea69-e21c-46ff-a2fb-1e6a22f73b13",
 		"name": "spring_practice",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "39125017"
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"username\": \"user1\",\r\n  \"email\": \"user1@test.com\",\r\n  \"password\": \"user1\"\r\n}",
+					"raw": "{\r\n  \"username\": \"user1\",\r\n  \"email\": \"user12@test.com\",\r\n  \"password\": \"user1\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,7 +112,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzM1NzU2OTAxLCJleHAiOjE3MzU3NjA1MDF9.Qsjoa-wOjjXpZhIFz9t3o7f_eZ6IK9BmWTSdmRWRgxY",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDQzOTMzMDIsImV4cCI6MTc0NDM5MzYwMn0.YkD0-HTBBI-VHo43rjE5a40pp5L-gfhlOuDUhIji-pk",
 							"type": "string"
 						}
 					]
@@ -121,7 +121,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"00e8415a-3e9c-4225-a15f-897cefce2187\",\r\n    \"name\": \"DESKTOP-9MS1G7L\",\r\n    \"mac_address\": \"7A:79:19:4C:95:00\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"1d190874-2076-48ab-8c74-fd361e6b0d8e\",\r\n    \"name\": \"DESKTOP-9MS1G7L\",\r\n    \"mac_address\": \"7A:79:19:4C:95:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -152,7 +152,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwiaWF0IjoxNzMyOTc5NzQ4LCJleHAiOjE3MzI5ODMzNDh9.xIK0BFKskf3ogwv1ZvhXqdi58h3fKylqtv4zBhDNd_A",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDQzODMxNDAsImV4cCI6MTc0NDM4MzQ0MH0.bvfaFWNO-qKXNsTkO2qZmIosaBTHQCNzZe2yxwU0uxc",
 							"type": "string"
 						}
 					]
@@ -161,7 +161,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"r\",\r\n    \"name\": \"HPhone\",\r\n    \"mac_address\": \"AA:AA:AA:AA:AA:AA\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"8e914f0a-d08e-4de1-bc4c-1dbacf047b04\",\r\n    \"name\": \"DESKTOP-9MS1G7L1\",\r\n    \"mac_address\": \"7A:79:19:4C:95:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -192,7 +192,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczMzY4NjcwMywiZXhwIjoxNzMzNjkwMzAzfQ.rbeMqNtEnGAPC510pA58p_avikwSUIupfzzkjNJOQHI",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDQzOTI1MzUsImV4cCI6MTc0NDM5MjgzNX0.ScW-hvjfy6jtOTPZAYFauJz0FqkIiTmHWjcSmmUgwxw",
 							"type": "string"
 						}
 					]
@@ -201,7 +201,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"activationCode\": \"60b513de-d928-4c42-bdb3-9140e4609239\"\r\n}",
+					"raw": "{\r\n    \"activationCode\": \"e6d87e6e-7f01-44ba-8478-586bb1f8b420\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -432,7 +432,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczNjAwMjk1MSwiZXhwIjoxNzM2MDA2NTUxfQ.n19t7ZSrwZm0UjUE3XDe9VCkOLRrEZuxj-z_bClOcg0",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDQzNzk5NTYsImV4cCI6MTc0NDM4MDI1Nn0.BOg3vyJvcmQANUhI6dhhpC_sGejzIlA7E8d85WLAfp4",
 							"type": "string"
 						}
 					]
@@ -473,7 +473,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sImlhdCI6MTczNjAwMjk1MSwiZXhwIjoxNzM2MDA2NTUxfQ.n19t7ZSrwZm0UjUE3XDe9VCkOLRrEZuxj-z_bClOcg0",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiYXV0aCI6WyJyZWFkIiwiUk9MRV9VU0VSIl0sInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NDQzOTE4ODgsImV4cCI6MTc0NDM5MjE4OH0.tQbgpGSrJEpMeKqmJNHFywbTyu3Fg9zBS4yOc4neLhU",
 							"type": "string"
 						}
 					]
@@ -679,7 +679,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0MzM3MjA2NSwiZXhwIjoxNzQzMzcyMzY1fQ.OQBpIRfSmOu-ccPxlm2d7Mnd7wY-kehk5-hB66OqUqQ",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0NDY1OTIzMywiZXhwIjoxNzQ0NjU5NTMzfQ.Ir-CnG1P_HIBy9CtiXWkonuEpL3G7dlaBASBsRw7ELc",
 							"type": "string"
 						}
 					]
@@ -688,7 +688,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"threatName\": \"Example Threat3\",\r\n    \"firstBytes\": \"ABCD1234EFGH5678\",\r\n    \"remainderLength\": 4,\r\n    \"fileType\": \"malware\",\r\n    \"offsetStart\": 0,\r\n    \"offsetEnd\": 100\r\n}",
+					"raw": "{\r\n    \"threatName\": \"Example Threat6\",\r\n    \"firstBytes\": \"ABCD1234EFGH5678\",\r\n    \"remainderLength\": 4,\r\n    \"fileType\": \"malware\",\r\n    \"offsetStart\": 0,\r\n    \"offsetEnd\": 100\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -861,6 +861,69 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Manifest",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0NDY2Nzc4MCwiZXhwIjoxNzQ0NjY4MDgwfQ.lruLEy_t-HvcKl2ZxcPKDGxtam_dsTSn_xAupsP04GI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:1337/api/signatures/manifest",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "1337",
+					"path": [
+						"api",
+						"signatures",
+						"manifest"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsImF1dGgiOlsicmVhZCIsIlJPTEVfQURNSU4iLCJtb2RpZmljYXRpb24iXSwidG9rZW5fdHlwZSI6ImFjY2VzcyIsImlhdCI6MTc0NDU4MjM3NywiZXhwIjoxNzQ0NTgyNjc3fQ.wU1tid-eq33BOgRtF0b8JQt__DvADpjHcQ9Ks4d5Z_g",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

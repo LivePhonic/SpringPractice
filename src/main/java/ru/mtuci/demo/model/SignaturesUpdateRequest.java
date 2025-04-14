@@ -17,4 +17,5 @@ public class SignaturesUpdateRequest {
     private String fileType;
     private Integer offsetStart;
     private Integer offsetEnd;
+    private SignatureStatus status;
 }
