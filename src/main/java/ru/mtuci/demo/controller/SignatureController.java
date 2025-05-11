@@ -224,29 +224,20 @@ public class SignatureController {
 
     private void writeSignatureDataToStream(ByteArrayOutputStream baos, ApplicationSignature signature) throws IOException {
         writeUuidBE(baos, signature.getId());
-        baos.write('|');
 
         writeStringBE(baos, signature.getThreatName());
-        baos.write('|');
 
         writeStringBE(baos, signature.getFirstBytes());
-        baos.write('|');
 
         writeStringBE(baos, signature.getRemainderHash());
-        baos.write('|');
 
         writeIntBE(baos, signature.getRemainderLength());
-        baos.write('|');
 
         writeStringBE(baos, signature.getFileType());
-        baos.write('|');
 
         writeIntBE(baos, signature.getOffsetStart());
-        baos.write('|');
 
         writeIntBE(baos, signature.getOffsetEnd());
-        byte[] fixedBytes = new byte[] { (byte) 0xFF, (byte) 0x00, (byte) 0x11, (byte) 0x22, (byte) 0x33 };
-        baos.write(fixedBytes);
     }
 
     private byte[] createManifest(int signatureCount, List<String> signatureEntries) throws IOException {
